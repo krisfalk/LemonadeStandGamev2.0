@@ -36,7 +36,7 @@ namespace LemonadeStandGamev2._0
         }
         public void PrintPlayerBankFinal(Player player)
         {
-            Console.WriteLine("{0}, your final total:\nTotal Income: {1}\nTotal Expenses: {2}\nLiquidated Inventory Value: {3}\nNet Profit/Loss: {4:0.00}\n", name, bank.GetIncome(), bank.GetSpent(), bank.GetLiquidated(player), bank.GetProfitLoss(player));
+            Console.WriteLine("{0}, your final total:\nTotal Income: {1:0.00}\nTotal Expenses: {2:0.00}\nLiquidated Inventory Value: {3:0.00}\nNet Profit/Loss: {4:0.00}\n", name, bank.GetIncome(), bank.GetSpent(), bank.GetLiquidated(player), bank.GetProfitLoss(player));
         }
     }
 }

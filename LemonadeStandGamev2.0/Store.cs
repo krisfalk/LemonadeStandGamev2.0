@@ -26,7 +26,6 @@ namespace LemonadeStandGamev2._0
         }
         public void SellIngredients(double totalSpent, Player player)
         {
-            player.bank.SubtractMoney(totalSpent);
             player.bank.AddSpent(totalSpent);
         }
     }

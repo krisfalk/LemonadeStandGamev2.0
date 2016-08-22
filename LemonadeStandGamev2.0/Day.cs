@@ -41,17 +41,17 @@ namespace LemonadeStandGamev2._0
         }
         public void RunPlayerDay(Player player, Customer[] customers)
         {
-            int cupsPurchased = 0;
+            player.inventory.ResetCupsPurchased();
             for (int i = 0; i < customers.Length; i+=0)
             {
                 player.inventory.SetPitcher(player);
-                if (player.inventory.GetPitcher() != 0 && player.inventory.CountCups() - 15 > 0 && player.inventory.CountIce() - 15 * player.recipe.GetIceRecipe() > 0)
+                if (player.inventory.GetPitcher() != 0 && player.inventory.CountCups() - 15 >= 0 && player.inventory.CountIce() - (15 * player.recipe.GetIceRecipe()) >= 0)
                 {
                     while (player.inventory.GetPitcher() > 0 && i < customers.Length)
                     {
                         if (customers[i].CheckBuyOrNot(today, player))
                         {
-                            cupsPurchased++;
+                            player.inventory.AddOneToCupsPurchased();
                             player.inventory.SubtractFromPitcher();
                             player.inventory.SubtractIce(player.recipe.GetIceRecipe());
                             player.inventory.SubtractCups(1);
@@ -71,14 +71,14 @@ namespace LemonadeStandGamev2._0
                     i++;
                 }
             }
-            double dailyEarnings = cupsPurchased * player.recipe.GetSellPrice();
+            double dailyEarnings = player.inventory.GetCupsPurchased() * player.recipe.GetSellPrice();
             player.bank.AddIncome(dailyEarnings);
             player.bank.AddMoney(dailyEarnings);
             Console.WriteLine("Press enter to continue.");
             Console.ReadLine();
             player.PrintPlayerStats();
-            player.popularity.AddToPopularity(cupsPurchased);
-            Console.WriteLine("On day {0} of {1}, you sold {2} cups of lemonade today and made ${3}.\nPress enter to continue.", dayNumber, totalDays, cupsPurchased, dailyEarnings);
+            player.popularity.AddToPopularity(player.inventory.GetCupsPurchased());
+            Console.WriteLine("On day {0} of {1}, you sold {2} cups of lemonade today and made ${3}.\nPress enter to continue.", dayNumber, totalDays, player.inventory.GetCupsPurchased(), dailyEarnings);
             Console.ReadLine();
         }
         public void PrintDay()

@@ -13,6 +13,7 @@ namespace LemonadeStandGamev2._0
         public List<Sugar> sugars;
         public List<Ice> iceCubes;
         int pitcher;
+        int cupsPurchased;
         public Inventory()
         {
             pitcher = 0;
@@ -23,15 +24,11 @@ namespace LemonadeStandGamev2._0
         }
         public void SetPitcher(Player player)
         {
-            if (lemons.Count - player.recipe.GetLemonRecipe() >= 0 && sugars.Count - player.recipe.GetSugarRecipe() >= 0)
+            if (GetPitcher() == 0 && lemons.Count - player.recipe.GetLemonRecipe() >= 0 && sugars.Count - player.recipe.GetSugarRecipe() >= 0)
             {
                 SubtractLemons(player.recipe.GetLemonRecipe());
                 SubtractSugar(player.recipe.GetSugarRecipe());
                 pitcher = 15;
-            }
-            else
-            {
-                pitcher = 0;
             }
         }
         public int GetPitcher()
@@ -41,6 +38,18 @@ namespace LemonadeStandGamev2._0
         public void SubtractFromPitcher()
         {
             pitcher--;
+        }
+        public void AddOneToCupsPurchased()
+        {
+            cupsPurchased++;
+        }
+        public void ResetCupsPurchased()
+        {
+            cupsPurchased = 0;
+        }
+        public int GetCupsPurchased()
+        {
+            return cupsPurchased;
         }
         public double AddCups(Player player)
         {
@@ -148,7 +157,6 @@ namespace LemonadeStandGamev2._0
                 if (answer != 0 && player.bank.CheckFunds(answer * cost))
                 {
                     player.bank.SubtractMoney(answer * cost);
-
                     total += answer;
                 }
                 else if(answer == 0)
